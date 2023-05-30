@@ -4,13 +4,19 @@ const app = express()
 const db = require('./routes')
 const port = process.env.PORT || 5000
 const host = '0.0.0.0'
+const cors = require("cors");
 
-app.use(bodyParser.json())
-app.use(
-  bodyParser.urlencoded({
-    extended: true,
-  })
-)
+var corsOptions = {
+  origin: "http://ferryibnu0802.ap-southeast-1.elasticbeanstalk.com"
+};
+
+app.use(cors(corsOptions));
+
+// parse requests of content-type - application/json
+app.use(express.json());
+
+// parse requests of content-type - application/x-www-form-urlencoded
+app.use(express.urlencoded({ extended: true }));
 
 app.get('/', (request, response) => {
   response.json({ info: 'Ferry Ibnu Node.js, Express, and Postgres API' })
